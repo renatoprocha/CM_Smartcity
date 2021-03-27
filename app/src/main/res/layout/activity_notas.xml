@@ -13,9 +13,9 @@
         android:layout_width="395dp"
         android:layout_height="573dp"
 
-
+        android:background="@drawable/rounded_edit_text"
+        android:backgroundTint="@color/colorWhite"
         android:layout_marginTop="61dp"
-        android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,7 +9,7 @@ import ipvc.estg.cm_smartcity.R
 import ipvc.estg.cm_smartcity.notasDB.NotasDB
 import kotlinx.android.synthetic.main.recyclerline.view.*
 
-class LineAdapter(val list: ArrayList<NotasDB>):RecyclerView.Adapter<LineViewHolder>(){
+class LineAdapter(val list: ArrayList<NotasDB>, var clickListener: OnNoteItenClickListener):RecyclerView.Adapter<LineViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineViewHolder {
         val itemView = LayoutInflater
@@ -21,8 +21,10 @@ class LineAdapter(val list: ArrayList<NotasDB>):RecyclerView.Adapter<LineViewHol
     override fun onBindViewHolder(holder: LineViewHolder, position: Int) {
         val currentPlace = list[position]
 
-        holder.titulo.text = currentPlace.titulo
-        holder.descricao.text = currentPlace.descricao
+        //holder.titulo.text = currentPlace.titulo
+        //holder.descricao.text = currentPlace.descricao
+
+        holder.initialize(list.get(position), clickListener)
     }
 
     override fun getItemCount(): Int {
@@ -33,4 +35,18 @@ class LineAdapter(val list: ArrayList<NotasDB>):RecyclerView.Adapter<LineViewHol
 class LineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val titulo = itemView.titulo
     val descricao = itemView.descricao
+
+    fun initialize(list: NotasDB, action: OnNoteItenClickListener) {
+        titulo.text = list.titulo
+        descricao.text = list.descricao
+
+        itemView.setOnClickListener{
+            action.onItemClick(list, adapterPosition)
+        }
+    }
 }
+
+interface OnNoteItenClickListener{
+    fun onItemClick(list: NotasDB, position: Int)
+}
+
