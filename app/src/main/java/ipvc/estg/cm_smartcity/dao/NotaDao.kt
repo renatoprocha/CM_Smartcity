@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NotaDao {
 
-    @Query("SELECT * FROM nota_table ORDER BY titulo ASC")
+    @Query("SELECT * FROM nota_table ORDER BY id ASC")
     fun getAlphabetizedNotes(): Flow<List<Nota>>
 
     @Query("SELECT * FROM nota_table WHERE titulo==:name")

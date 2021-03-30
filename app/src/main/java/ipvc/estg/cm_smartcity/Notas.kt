@@ -14,6 +14,7 @@ import ipvc.estg.cm_smartcity.Application.NotaListAdapter
 import ipvc.estg.cm_smartcity.entities.Nota
 import ipvc.estg.cm_smartcity.viewModel.NotaViewModel
 import ipvc.estg.cm_smartcity.viewModel.NotaViewModelFactory
+import kotlinx.android.synthetic.main.recyclerline.*
 
 
 class Notas : AppCompatActivity() {
@@ -49,16 +50,36 @@ class Notas : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
+        var eTitulo ="a"
+        var eDesc ="a"
 
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+
+
             intentData?.getStringExtra(NotasEditor.EXTRA_REPLY)?.let { reply ->
-                val word = Nota(titulo = reply, descricao = "ola")
-                wordViewModel.insert(word)
+                eTitulo = reply
+
             }
-        } else {
+
+
+
+        }
+        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+
+
+            intentData?.getStringExtra(NotasEditor.EXTRA_DESC)?.let { reply ->
+                eDesc = reply
+                val nota = Nota(titulo = eTitulo, descricao = eDesc)
+                wordViewModel.insert(nota)
+            }
+
+
+
+        }
+        else {
             Toast.makeText(
                 applicationContext,
-                "Titulo nao inserido",
+                "Campos em branco!",
                 Toast.LENGTH_LONG
             ).show()
         }

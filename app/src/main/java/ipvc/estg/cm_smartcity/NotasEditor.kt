@@ -13,26 +13,30 @@ import android.widget.EditText
 
 import kotlinx.android.synthetic.main.activity_notas.*
 import kotlinx.android.synthetic.main.recyclerline.*
+import org.w3c.dom.Text
 
 class NotasEditor : AppCompatActivity() {
 
     private lateinit var editWordView: EditText
+    private lateinit var editDescView: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notas_editor)
         editWordView = findViewById(R.id.titulo)
+        editDescView = findViewById(R.id.descricao)
 
         val button = findViewById<Button>(R.id.button3)
         button.setOnClickListener{
             val replyIntent = Intent()
-            if(TextUtils.isEmpty(editWordView.text)) {
+            if(TextUtils.isEmpty(editWordView.text) or (TextUtils.isEmpty(editDescView.text))) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val word = editWordView.text.toString()
-                editWordView = findViewById(R.id.descricao)
-                val desc = editWordView.text.toString()
+                val desc = editDescView.text.toString()
                 replyIntent.putExtra(EXTRA_REPLY, word)
+                replyIntent.putExtra(EXTRA_DESC, desc)
+
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
@@ -42,6 +46,7 @@ class NotasEditor : AppCompatActivity() {
 
     companion object{
         const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
+        const val EXTRA_DESC = "com.example.android.wordlistsql.REPLY1"
     }
 
 }

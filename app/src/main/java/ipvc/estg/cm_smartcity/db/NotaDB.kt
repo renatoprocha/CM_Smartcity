@@ -28,10 +28,10 @@ public abstract class NotaDB : RoomDatabase() {
                     var NotaDao = database.NotaDao()
 
                     // Delete all content here.
-                    NotaDao.deleteAll()
+                    //NotaDao.deleteAll()
 
                     // Add sample words.
-                    var nota = Nota(0,"nota0","ola")
+                    /*var nota = Nota(0,"nota0","ola")
                     NotaDao.insert(nota)
 
                     nota = Nota(1,"nota2", "ok")
@@ -42,7 +42,7 @@ public abstract class NotaDB : RoomDatabase() {
                     NotaDao.insert(nota)
 
                     nota = Nota(3, "notaTeste", "teste")
-                    NotaDao.insert(nota)
+                    NotaDao.insert(nota)*/
 
 
                 }
