@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
@@ -28,6 +31,8 @@ class Notas : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notas)
 
+
+
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = NotaListAdapter()
         recyclerView.adapter = adapter
@@ -47,6 +52,13 @@ class Notas : AppCompatActivity() {
             startActivityForResult(intent, newWordActivityRequestCode)
         }
     }
+
+    fun deleteNota(id: String, titulo: String, desc: String){
+        val nota = Nota(id=id.toInt(), titulo = titulo, descricao = desc)
+        wordViewModel.delete(nota)
+        Toast.makeText(this, "Nota eliminada!", Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
@@ -71,17 +83,25 @@ class Notas : AppCompatActivity() {
                 eDesc = reply
                 val nota = Nota(titulo = eTitulo, descricao = eDesc)
                 wordViewModel.insert(nota)
+                Toast.makeText(this, "Nota adicionada", Toast.LENGTH_SHORT).show()
             }
 
 
 
         }
         else {
-            Toast.makeText(
-                applicationContext,
-                "Campos em branco!",
-                Toast.LENGTH_LONG
-            ).show()
+            intentData?.getStringExtra(NotasEditor.EXTRA_REPLY)?.let { reply ->
+                val res = reply
+                if(res == "1"){
+                    Toast.makeText(
+                        applicationContext,
+                        "Campo(s) em branco!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+            }
+
         }
     }
 }

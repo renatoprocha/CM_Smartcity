@@ -1,10 +1,7 @@
 package ipvc.estg.cm_smartcity.dao
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import ipvc.estg.cm_smartcity.entities.Nota
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +16,10 @@ interface NotaDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(nota: Nota)
+    @Delete
+    suspend fun delete(nota: Nota)
+    @Update
+    suspend fun update(nota: Nota)
 
     @Query("DELETE FROM nota_table")
     suspend fun deleteAll()
