@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 
@@ -28,6 +29,8 @@ class NotasEditor : AppCompatActivity() {
 
     private lateinit var editWordView: EditText
     private lateinit var editDescView: EditText
+    private lateinit var tituloTextView: TextView
+    private lateinit var descTextView: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +44,13 @@ class NotasEditor : AppCompatActivity() {
 
         if(getIntent().getStringExtra("ID")!=null){
             idNota = getIntent().getStringExtra("ID").toInt()
+            descTextView = findViewById(R.id.descricaoTextView)
+            tituloTextView = findViewById(R.id.tituloTextView)
+            tituloTextView.setVisibility(View.VISIBLE)
+            descTextView.setVisibility(View.VISIBLE)
+
         }
+
 
         titulo.text = getIntent().getStringExtra("TITULO")
         descricao.text = getIntent().getStringExtra("DESC")

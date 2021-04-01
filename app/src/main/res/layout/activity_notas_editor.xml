@@ -45,24 +45,25 @@
         />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tituloTextView"
         android:layout_width="156dp"
         android:layout_height="15dp"
         android:gravity="center_horizontal"
         android:text="Título:"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textStyle="italic"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/titulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.822"
+        android:visibility="invisible"
         />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/descricaoTextView"
         android:layout_width="156dp"
         android:layout_height="15dp"
         android:layout_marginTop="36dp"
@@ -70,13 +71,14 @@
         android:text="Descrição:"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textStyle="italic"
+        android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/descricao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.111" />
 
     <Button
         android:id="@+id/button3"
