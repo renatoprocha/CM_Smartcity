@@ -1,7 +1,13 @@
 package ipvc.estg.cm_smartcity
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -21,6 +27,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            getString(R.string.perference_file_key), Context.MODE_PRIVATE)
+
+        val idUser = sharedPref.getInt(getString(R.string.id_user), -1)
+        Log.d("id_user2", "$idUser")
     }
 
     /**
@@ -39,5 +51,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    fun Logout(view: View){
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            getString(R.string.perference_file_key), Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            putInt(getString(R.string.id_user), -1)
+            commit()
+        }
+
+
+        val intent = Intent(this@MapsActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 }

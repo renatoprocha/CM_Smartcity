@@ -1,8 +1,11 @@
 package ipvc.estg.cm_smartcity
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -20,6 +23,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            getString(R.string.perference_file_key), Context.MODE_PRIVATE)
+
+        val idValue = sharedPref.getInt(getString(R.string.id_user), -1)
+        Log.d("id_user", "$idValue")
+
+        if(idValue != -1){
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
     }
@@ -44,7 +58,22 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if(response.isSuccessful){
                     val c: loginInfo = response.body()!!
-                    Toast.makeText(this@MainActivity, c.status.toString() + "-" + c.MSG, Toast.LENGTH_LONG).show()
+                    if(c.status == "true"){
+                        val sharedPref: SharedPreferences = getSharedPreferences(
+                            getString(R.string.perference_file_key), Context.MODE_PRIVATE)
+                        with (sharedPref.edit()){
+                            putInt(getString(R.string.id_user), c.data.id)
+                            commit()
+                        }
+
+                        val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    }
+                    if(c.status == "false"){
+                        Toast.makeText(this@MainActivity, "Cardenciais erradas", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 
