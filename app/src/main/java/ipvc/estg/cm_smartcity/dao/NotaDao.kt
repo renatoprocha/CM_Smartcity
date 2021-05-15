@@ -11,8 +11,6 @@ interface NotaDao {
     @Query("SELECT * FROM nota_table ORDER BY id ASC")
     fun getAlphabetizedNotes(): Flow<List<Nota>>
 
-    @Query("SELECT * FROM nota_table WHERE titulo==:name")
-    fun getNotasFromTitulo(name: String): LiveData<List<Nota>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(nota: Nota)

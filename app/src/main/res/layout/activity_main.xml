@@ -22,7 +22,8 @@
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/colorWhite"
-        />
+        android:onClick="login"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/button2"
@@ -61,7 +62,7 @@
         android:textColor="@color/colorWhite"/>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -93,7 +94,7 @@
 
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
