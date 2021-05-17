@@ -21,4 +21,7 @@ interface EndPoints {
     @POST("users/login")
     fun login(@Field("nome") nome: String,
                     @Field("password") password: String): Call<loginInfo>
+
+    @GET("reports")
+    fun getReports(): Call<List<Report>>
 }
