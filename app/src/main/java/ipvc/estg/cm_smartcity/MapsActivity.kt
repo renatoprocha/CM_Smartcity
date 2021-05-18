@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,9 +29,11 @@ import ipvc.estg.cm_smartcity.api.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.util.*
 
 //branch mapa
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
 
     private lateinit var mMap: GoogleMap
     private lateinit var reports: List<Report>
@@ -52,16 +56,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //inicialização fusedLocationClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        /*locationCallback = object : LocationCallback() {
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
                 var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
+                LocationChanged(lastLocation)
 
-                Log.d("cord", "Coord:" + loc.latitude + "-" + loc.longitude )
+
+                Log.d("cord", "Coord:" + loc.latitude + "-" + loc.longitude + "Localização:" )
                 mMap.isMyLocationEnabled = true
             }
-        }*/
+        }
 
         val sharedPref: SharedPreferences = getSharedPreferences(
             getString(R.string.perference_file_key), Context.MODE_PRIVATE)
@@ -96,20 +102,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
         })
-        //createLocationRequest()
+        createLocationRequest()
     }
 
-    /*override fun onPause(){
+    override fun onPause(){
         super.onPause()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-    }*/
+    }
 
-    /*public override fun onResume(){
+    public override fun onResume(){
         super.onResume()
         startLocationUpdates()
-    }*/
+    }
 
-    /*private fun startLocationUpdates() {
+    private fun startLocationUpdates() {
         if(ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -117,7 +123,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
-    }*/
+    }
 
     /**
      * Manipulates the map once available.
@@ -138,6 +144,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun abreNota(view: View) {
         val intent = Intent(this@MapsActivity, Notas::class.java)
+        startActivity(intent)
+    }
+    fun Report(view: View) {
+        val intent = Intent(this@MapsActivity, ReportNew::class.java)
         startActivity(intent)
     }
 
@@ -179,10 +189,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    /*private fun createLocationRequest(){
+    private fun createLocationRequest(){
         locationRequest = LocationRequest()
         locationRequest.interval = 1000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }*/
+    }
+
+
+
+
+    private fun setAddress(adress: Address) {
+        if(adress != null) {
+            if(adress.getAddressLine(0) != null) {
+                Log.d("LLL", ""+ adress.getAddressLine(0) +"")
+            }
+            if(adress.getAddressLine(1) != null) {
+                Log.d("LLL", ""+ adress.getAddressLine(1) +"")
+            }
+
+        }
+    }
+
+    private fun LocationChanged(p0: Location) {
+        Log.d("LLL", "changed!!")
+
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var Adress: List<Address>? = null
+
+        try{
+            Adress = geoCoder.getFromLocation(p0.latitude, p0.longitude,1)
+        }catch (e: IOException) {
+        e.printStackTrace()}
+        setAddress(Adress!![0])
+    }
 
 }
