@@ -21,6 +21,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import ipvc.estg.cm_smartcity.api.EndPoints
+import ipvc.estg.cm_smartcity.api.Report
 import ipvc.estg.cm_smartcity.api.ServiceBuilder
 import ipvc.estg.cm_smartcity.api.reportInsertInfo
 import kotlinx.android.synthetic.main.activity_report_new.*
@@ -30,7 +31,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.util.*
 
-class ReportNew : AppCompatActivity(), PermissionListener {
+class ReportEdit : AppCompatActivity(), PermissionListener {
 
 
 
@@ -40,12 +41,29 @@ class ReportNew : AppCompatActivity(), PermissionListener {
     private lateinit var editText: EditText
     private lateinit var imgButton: ImageButton
     private lateinit var imageView: ImageView
+    private lateinit var report: Report
     open var image64 = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var localizacao = intent.getStringExtra("EXTRA_LOC")
-        var lat = intent.getDoubleExtra("EXTRA_LAT", -1.37)
-        var longi = intent.getDoubleExtra("EXTRA_LONGI", -1.37)
+        var idMarker = intent.getStringExtra("EXTRA_ID")
+
+
+
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getReport(idMarker.toInt())
+
+        call.enqueue(object : Callback<Report> {
+            override fun onFailure(call: Call<Report>, t: Throwable) {
+                Toast.makeText(this@ReportEdit, "${t.message}  erro", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<Report>, response: Response<Report>) {
+                if(response.isSuccessful){
+                    report = response.body()!!
+
+                }
+            }
+        })
 
 
         super.onCreate(savedInstanceState)
@@ -57,9 +75,7 @@ class ReportNew : AppCompatActivity(), PermissionListener {
 
         radioGroup = findViewById(R.id.radioGroup)
 
-        Log.d("LOC", localizacao)
-        Log.d("LAT", lat.toString())
-        Log.d("LONGI", longi.toString())
+        Log.d("LOC", idMarker)
 
         imgButton.setOnClickListener{
             Dexter.withContext(this)
@@ -88,6 +104,8 @@ class ReportNew : AppCompatActivity(), PermissionListener {
                     getString(R.string.perference_file_key), Context.MODE_PRIVATE)
 
                 val idUser = sharedPref.getInt(getString(R.string.id_user), -1)
+                val lat = report.lat
+                val longi = report.longi
 
 
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
@@ -104,18 +122,18 @@ class ReportNew : AppCompatActivity(), PermissionListener {
 
                             }
                             if(c.status == "false"){
-                                Toast.makeText(this@ReportNew, "Algo errado", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@ReportEdit, "Algo errado", Toast.LENGTH_LONG).show()
                             }
                         }
 
                     }
 
                     override fun onFailure(call: Call<reportInsertInfo>, t: Throwable) {
-                        Toast.makeText(this@ReportNew, "ERRO API", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ReportEdit, "ERRO API", Toast.LENGTH_SHORT).show()
                     }
                 })
 
-                val intente = Intent(this@ReportNew, MapsActivity::class.java)
+                val intente = Intent(this@ReportEdit, MapsActivity::class.java)
                 startActivity(intente)
 
             }

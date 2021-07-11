@@ -11,17 +11,27 @@ interface EndPoints {
     fun getUserById(@Path("id") id: Int): Call<User>
 
     @FormUrlEncoded
-    @POST("ponto/insert")
-    fun insertPonto(@Field("userId") userId: Int,
-                    @Field("lat") lat: Int,
-                    @Field("longi") longi: Int,
-                    @Field("tipo") tipo: Int): Call<loginInfo>
+    @POST("reports/insert")
+    fun insertReport(@Field("id_user") userId: Int,
+                    @Field("tipo") tipo: String,
+                    @Field("descricao") descricao: String,
+                    @Field("lat") lat: Double,
+                    @Field("longi") longi: Double,
+                    @Field("image") image: String
+                    ): Call<reportInsertInfo>
 
     @FormUrlEncoded
     @POST("users/login")
     fun login(@Field("nome") nome: String,
-                    @Field("password") password: String): Call<loginInfo>
+              @Field("password") password: String)
+            : Call<loginInfo>
 
     @GET("reports")
     fun getReports(): Call<List<Report>>
+
+    @GET("reports/{id}")
+    fun getReport(@Path("id") id: Int): Call<Report>
+
+    @GET("report/{tipo}")
+    fun getReportTipo(@Path("tipo") tipo: String): Call<List<Report>>
 }

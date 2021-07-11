@@ -7,17 +7,17 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".MapsActivity">
 
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_width="408dp"
+        android:layout_height="681dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.006"
         tools:context=".MapsActivity"
-        tools:layout_editor_absoluteX="-1dp" />
-
+        tools:layout_editor_absoluteX="3dp" />
 
     <Button
         android:id="@+id/buttonNota"
@@ -41,6 +41,8 @@
         tools:ignore="OnClick"
         android:stateListAnimator="@null"
         />
+
+
 
     <Button
         android:id="@+id/buttonNota2"
@@ -69,7 +71,6 @@
         style="@style/TextAppearance.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:background="@color/colorPrimaryDark"
         android:drawableTop="@drawable/ic_report"
         android:onClick="Report"
@@ -85,5 +86,65 @@
         app:layout_constraintTop_toBottomOf="@+id/map"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtros"
+        android:textColor="#33AE37"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.065" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="152dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.115">
+
+        <RadioButton
+            android:id="@+id/radioObras1"
+            android:layout_width="94dp"
+            android:layout_height="44dp"
+            android:buttonTint="#808080"
+            android:text="Obra"
+            android:textColor="#808080" />
+
+        <RadioButton
+            android:id="@+id/radioAcidente1"
+            android:layout_width="97dp"
+            android:layout_height="47dp"
+            android:buttonTint="#808080"
+            android:text="Acidente"
+            android:textColor="#808080" />
+
+        <RadioButton
+            android:id="@+id/radioSaneamento1"
+            android:layout_width="122dp"
+            android:layout_height="55dp"
+            android:buttonTint="#808080"
+            android:text="Saneamento"
+            android:textColor="#808080" />
+
+        <RadioButton
+            android:id="@+id/Semfiltro"
+            android:layout_width="122dp"
+            android:layout_height="55dp"
+            android:buttonTint="#808080"
+            android:text="Sem Filtro"
+            android:textColor="#808080" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
