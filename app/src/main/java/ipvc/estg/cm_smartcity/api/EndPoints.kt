@@ -34,4 +34,18 @@ interface EndPoints {
 
     @GET("report/{tipo}")
     fun getReportTipo(@Path("tipo") tipo: String): Call<List<Report>>
+
+    @GET("reportDelete/{id}")
+    fun reportDelete(@Path("id") id: Int) : Call<loginInfo>
+
+    @FormUrlEncoded
+    @POST("report/reportUpdate")
+    fun reportUpdate(@Field("id") id: Int,
+                     @Field("id_user") id_user: Int,
+                     @Field("tipo") tipo: String,
+                     @Field("descricao") descricao: String,
+                     @Field("lat") lat: Double,
+                     @Field("longi") longi: Double,
+                     @Field("image") image: String)
+            : Call<loginInfo>
 }

@@ -432,11 +432,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, SensorEventListene
                     if(response.isSuccessful){
                         report = response.body()!!
                         val reportUser = report.id_user
-                        val idDoMarker = markerId.id
+                        val idDoMarker = report.id
+                        Log.d("IDMARK", idDoMarker.toString())
                         if(reportUser == idUser){
-                           /* val intent = Intent(this@MapsActivity, ReportEdit::class.java)
+                           val intent = Intent(this@MapsActivity, ReportEdit::class.java)
                             intent.putExtra("EXTRA_ID", idDoMarker)
-                            startActivity(intent)*/
+                            startActivity(intent)
                             Toast.makeText(this@MapsActivity, "Ponto meu", Toast.LENGTH_SHORT).show()
                         }else{
                             Toast.makeText(this@MapsActivity, "Ação não permitida", Toast.LENGTH_SHORT).show()
